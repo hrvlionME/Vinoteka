@@ -1,1 +1,0 @@
-INSERT INTO Vino (id, naziv, vrsta, podrijetlo) VALUES (1, "test", "test123", "test123");

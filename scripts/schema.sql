@@ -1,17 +1,1 @@
 USE BAZA;
-
-CREATE TABLE Vino (
-    id INT PRIMARY KEY,
-    naziv VARCHAR(255) NOT NULL,
-    vrsta VARCHAR(255) NOT NULL,
-    podrijetlo VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE Korisnik (
-    id INT PRIMARY KEY,
-    email VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    ime VARCHAR(255) NOT NULL,
-    prezime VARCHAR(255) NOT NULL,
-    role VARCHAR(255) NOT NULL
-);
