@@ -8,5 +8,3 @@ services:
       MYSQL_DATABASE: BAZA
     ports:
       - "3306:3306"
-    volumes:
-      - "./scripts/schema.sql:/docker-entrypoint-initdb.d/1.sql"

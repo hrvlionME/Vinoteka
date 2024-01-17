@@ -1,8 +1,5 @@
 package ba.sum.fsre.vinoteka.models;
-import jakarta.persistence.Transient;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 @Entity
@@ -23,6 +20,9 @@ public class Vino {
 
     @NotBlank(message="Polje područje je obvezno!")
     String podrucje;
+
+    @OneToOne(mappedBy = "vino")
+    private Korpa korpa;
 
     //String godinaBerbe;
     public Vino(){}
@@ -72,6 +72,14 @@ public class Vino {
 
     public void setPodrucje(String podrucje) {
         this.podrucje = podrucje;
+    }
+
+    public Korpa getKorpa() {
+        return korpa;
+    }
+
+    public void setKorpa(Korpa korpa) {
+        this.korpa = korpa;
     }
 }
 
