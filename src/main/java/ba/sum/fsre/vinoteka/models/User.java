@@ -1,10 +1,9 @@
 package ba.sum.fsre.vinoteka.models;
 
-import jakarta.persistence.Transient;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+
+import java.util.List;
 
 @Entity
 public class User {
@@ -33,6 +32,10 @@ public class User {
     String lozinka;
 
     String datum;
+
+
+    @OneToMany(mappedBy="user")
+    private List<Korpa> korpe;
 
     @NotBlank(message = "Potvrdite lozinku")
     @Transient
@@ -118,6 +121,8 @@ public User(){}
     @AssertTrue(message = "Lozinke se moraju podudarati")
     public boolean isPasswordsEqual(){
         try {
+            System.out.println(this.lozinka);
+            System.out.println(this.potvrdaLozinke);
             return this.lozinka.equals(this.potvrdaLozinke);
         } catch (Exception e){
             return false;
