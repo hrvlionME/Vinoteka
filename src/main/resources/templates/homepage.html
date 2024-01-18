@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <title>Dobrodošli u Galeriju Vina</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            background-color: #fcf9f5;
+            color: #333;
+        }
+
+        header {
+            background-color: #511103;
+            background-image: url('vino.jpg');
+            padding: 20px;
+            height: 170px;
+            text-align: center;
+            color: #fff;
+        }
+
+        #dobrodosli {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #470202;
+            font-weight: 900;
+            font-size: 95px;
+            font-style: italic;
+            text-decoration: underline;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        #galerija {
+            width: 950px;
+            height: 120px;
+            top: 100px;
+            left: 100px;
+            text-align: end;
+            font-family: 'Courier New', Courier, monospace;
+            color: #470202;
+            font-weight: 120;
+            font-size: 50px;
+            font-style: italic;
+        }
+
+        #login-link {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #470202;
+            color: #fff;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        #slike-vina {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 2px;
+        }
+
+        #slike-vina img {
+            width: 250px;
+            height: 150px;
+            margin: 1px;
+            border: 2px solid #470202;
+            border-radius: 5px;
+        }
+
+        footer {
+            background-color: #470202;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .okvir1 {
+            border: 2px solid #470202;
+        }
+
+        .okvir2 {
+            border: 4px dashed #470202;
+        }
+
+        .okvir3 {
+            border: 3px double #470202;
+        }
+    </style>
+</head>
+<body>
+<header> </header>
+
+<a href="#" id="login-link">Prijavite se</a>
+
+<div id="dobrodosli">
+    Dobrodošli <br>
+</div>
+<div id="galerija">GALERIJA VINA</div>
+<div id="slike-vina">
+    <img th:src="@{/images/vino4.jpg}" alt="Vino 1" class="okvir1">
+    <img th:src="@{/images/vino1.jpg}" alt="Vino 2" class="okvir2">
+    <img th:src="@{/images/vino3.jpg}" alt="Vino 3" class="okvir3">
+    <img th:src="@{/images/vino2.jpg}" alt="Vino 4" class="okvir1">
+    <img th:src="@{/images/vino5.jpg}" alt="Vino 5" class="okvir2">
+</div>
+
+<footer>
+    <p style="font-size: 0.8em;">Kontakt: vinoteka@gmail.com | Telefon: +387 63 000 000</p>
+</footer>
+
+<script>
+    document.getElementById('login-link').addEventListener('click', function() {
+        window.location.href = '/auth/login';
+    });
+</script>
+</body>
+</html>
