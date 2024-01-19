@@ -25,7 +25,7 @@ public class VinoController {
     @Autowired
     VinoRepository vinoRepo;
 
-    private static String UPLOADED_FOLDER = "classpath:static/uploads/";
+    private static String UPLOADED_FOLDER = System.getProperty("user.dir") + "/src/main/resources/static/uploads/";
     @GetMapping("/store")
     public String gallery(Model model){
         List<Vino> vina = vinoRepo.findAll();
@@ -39,6 +39,11 @@ public class VinoController {
         model.addAttribute("vina", vina);
         return "edit";
     }
+    @GetMapping("/edit/add")
+    public String add(Model model){
+        model.addAttribute("vino", new Vino());
+        return "add";
+    }
 
     @GetMapping("/showcase")
     public String showcase(Model model){
@@ -48,12 +53,13 @@ public class VinoController {
     }
 
 
-    @PostMapping("/store")
-    public String addUser(@Valid Vino vino, @RequestParam("file") MultipartFile file, BindingResult result, Model model){
+    @PostMapping("/upload")
+    public String addVino(@Valid Vino vino, @RequestParam("file") MultipartFile file, BindingResult result, Model model){
         boolean errors = result.hasErrors();
-        if(errors){
+        System.out.println("POSTED");
+        if(errors){;
             model.addAttribute("vino", vino);
-            return "dodajvino";
+            return "/edit/add";
         } else {
             if (file != null && !file.isEmpty()) {
                 try {
@@ -69,7 +75,7 @@ public class VinoController {
             }
 
             vinoRepo.save(vino);
-            return "redirect:/store";
+            return "redirect:/edit";
         }
     }
 }

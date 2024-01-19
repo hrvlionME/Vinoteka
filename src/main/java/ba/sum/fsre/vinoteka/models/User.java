@@ -133,8 +133,6 @@ public User(){}
     @AssertTrue(message = "Lozinke se moraju podudarati")
     public boolean isPasswordsEqual(){
         try {
-            System.out.println(this.lozinka);
-            System.out.println(this.potvrdaLozinke);
             return this.lozinka.equals(this.potvrdaLozinke);
         } catch (Exception e){
             return false;

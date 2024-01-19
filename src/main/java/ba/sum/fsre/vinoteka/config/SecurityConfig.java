@@ -34,19 +34,6 @@ public class SecurityConfig {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
-
-        authProvider.setPreAuthenticationChecks(userDetails -> {
-            // Log relevant information before authentication
-            System.out.println("Pre-authentication checks: Username - " + userDetails.getUsername() + ", UserDetails - " + userDetails.getPassword());
-        });
-
-        authProvider.setPostAuthenticationChecks(userDetails -> {
-            // Log relevant information after authentication
-            System.out.println("Pre-authentication checks: Username - " + userDetails.getUsername() + ", UserDetails - " + userDetails.getPassword());
-        });
-
-
-
         return authProvider;
     }
 
@@ -64,6 +51,7 @@ public class SecurityConfig {
                 .requestMatchers("/edit/**").hasAuthority("ADMIN")
                 .requestMatchers("/store/**").hasAuthority("USER")
                 .requestMatchers("/showcase/**").anonymous()
+                .requestMatchers("/upload/**").permitAll() // Allow unauthenticated access to the file upload endpoint
                 .anyRequest()
                 .authenticated()
                 .and()

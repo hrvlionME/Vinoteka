@@ -21,7 +21,6 @@ public class Vino {
     @NotBlank(message="Polje područje je obvezno!")
     String podrucje;
 
-    @NotBlank(message="Slika je obvezna")
     String lokacijaSlike;
 
     @OneToOne(mappedBy = "vino")
