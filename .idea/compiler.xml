@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="eDnevnik" />
+        <module name="Vinoteka" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Vinoteka" target="17" />
+      <module name="eDnevnik" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

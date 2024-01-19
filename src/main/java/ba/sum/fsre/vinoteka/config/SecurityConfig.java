@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.sql.DataSource;
 
@@ -49,21 +50,27 @@ public class SecurityConfig {
         return authProvider;
     }
 
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
+        return new MyAuthenticationSuccessHandler();
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/register/**", "/auth/register")
+                .requestMatchers("/auth/register/**", "/auth/register", "/images/**")
                 .permitAll()
+                .requestMatchers("/edit/**").hasAuthority("ADMIN")
+                .requestMatchers("/store/**").hasAuthority("USER")
+                .requestMatchers("/showcase/**").anonymous()
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin()
+                .formLogin().successHandler(myAuthenticationSuccessHandler())
                 .loginPage("/auth/login")
                 .permitAll()
                 .usernameParameter("email")
-                .defaultSuccessUrl("/", true)
                 .permitAll()
                 .and()
                 .logout().logoutSuccessUrl("/").permitAll();

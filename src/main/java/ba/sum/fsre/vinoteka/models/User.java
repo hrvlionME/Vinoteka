@@ -12,6 +12,9 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @Size(min=2, max=20, message = "Ime mora biti 2-10 slova(znakova).")
     @NotBlank(message="Ime je obvezno!")
     String ime;
@@ -116,6 +119,15 @@ public User(){}
 
     public void setPotvrdaLozinke(String potvrdaLozinke) {
         this.potvrdaLozinke = potvrdaLozinke;
+    }
+
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @AssertTrue(message = "Lozinke se moraju podudarati")
