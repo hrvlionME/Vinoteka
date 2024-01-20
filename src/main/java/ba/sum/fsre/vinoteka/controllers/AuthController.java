@@ -1,5 +1,6 @@
 package ba.sum.fsre.vinoteka.controllers;
 
+import ba.sum.fsre.vinoteka.models.Role;
 import ba.sum.fsre.vinoteka.models.User;
 import ba.sum.fsre.vinoteka.repositories.UserRepository;
 import jakarta.validation.Valid;
@@ -29,6 +30,12 @@ public class AuthController {
         return "login";
     }
 
+    @GetMapping("/")
+    public String home(){
+        return "homepage";
+    }
+
+
     @PostMapping("/auth/register")
     public String addUser(@Valid User user, BindingResult result, Model model){
         boolean errors = result.hasErrors();
@@ -40,6 +47,7 @@ public class AuthController {
             String passwordEncoded = encoder.encode(user.getLozinka());
             user.setLozinka(passwordEncoded);
             user.setPotvrdaLozinke(passwordEncoded);
+            user.setRole(Role.USER);
             userRepo.save(user);
             return "redirect:/auth/login";
         }

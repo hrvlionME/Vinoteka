@@ -1,20 +1,18 @@
 package ba.sum.fsre.vinoteka.models;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
     private User user;
 
     public UserDetails(User user) {
         this.user = user;
-        System.out.println(user.getEmail() + user.getLozinka());
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
     }
 
     @Override
@@ -57,5 +55,10 @@ public class UserDetails implements org.springframework.security.core.userdetail
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(new SimpleGrantedAuthority(user.getRole().name()));
     }
 }

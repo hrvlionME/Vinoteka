@@ -21,17 +21,21 @@ public class Vino {
     @NotBlank(message="Polje područje je obvezno!")
     String podrucje;
 
-    @OneToOne(mappedBy = "vino")
+    String lokacijaSlike;
+
+    @ManyToOne
+    @JoinColumn(name = "id_korpa")
     private Korpa korpa;
 
     //String godinaBerbe;
     public Vino(){}
 
-     public Vino(String naziv,String proizvodjac,String podrucje,String sorta){
+     public Vino(String naziv,String proizvodjac,String podrucje,String sorta, String lokacijaSlike){
          this.naziv=naziv;
          this.podrucje=podrucje;
          this.proizvodjac=proizvodjac;
          this.sorta=sorta;
+         this.lokacijaSlike = lokacijaSlike;
      }
 
     public Long getId() {
@@ -81,6 +85,15 @@ public class Vino {
     public void setKorpa(Korpa korpa) {
         this.korpa = korpa;
     }
+
+    public String getLokacijaSlike() {
+        return lokacijaSlike;
+    }
+
+    public void setLokacijaSlike(String lokacijaSlike) {
+        this.lokacijaSlike = lokacijaSlike;
+    }
+
 }
 
 

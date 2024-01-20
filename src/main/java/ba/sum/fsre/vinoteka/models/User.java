@@ -12,6 +12,9 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @Size(min=2, max=20, message = "Ime mora biti 2-10 slova(znakova).")
     @NotBlank(message="Ime je obvezno!")
     String ime;
@@ -118,11 +121,18 @@ public User(){}
         this.potvrdaLozinke = potvrdaLozinke;
     }
 
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @AssertTrue(message = "Lozinke se moraju podudarati")
     public boolean isPasswordsEqual(){
         try {
-            System.out.println(this.lozinka);
-            System.out.println(this.potvrdaLozinke);
             return this.lozinka.equals(this.potvrdaLozinke);
         } catch (Exception e){
             return false;

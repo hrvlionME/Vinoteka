@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.sql.DataSource;
 
@@ -33,37 +34,31 @@ public class SecurityConfig {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
-
-        authProvider.setPreAuthenticationChecks(userDetails -> {
-            // Log relevant information before authentication
-            System.out.println("Pre-authentication checks: Username - " + userDetails.getUsername() + ", UserDetails - " + userDetails.getPassword());
-        });
-
-        authProvider.setPostAuthenticationChecks(userDetails -> {
-            // Log relevant information after authentication
-            System.out.println("Pre-authentication checks: Username - " + userDetails.getUsername() + ", UserDetails - " + userDetails.getPassword());
-        });
-
-
-
         return authProvider;
     }
 
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
+        return new MyAuthenticationSuccessHandler();
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/register/**", "/auth/register")
+                .requestMatchers("/auth/register/**", "/auth/register", "/images/**", "/uploads/**")
                 .permitAll()
+                .requestMatchers("/edit/**").hasAuthority("ADMIN")
+                .requestMatchers("/store/**").hasAuthority("USER")
+                .requestMatchers("/showcase/**").anonymous()
+                .requestMatchers("/upload/**").permitAll() // Allow unauthenticated access to the file upload endpoint
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin()
+                .formLogin().successHandler(myAuthenticationSuccessHandler())
                 .loginPage("/auth/login")
                 .permitAll()
                 .usernameParameter("email")
-                .defaultSuccessUrl("/", true)
                 .permitAll()
                 .and()
                 .logout().logoutSuccessUrl("/").permitAll();
