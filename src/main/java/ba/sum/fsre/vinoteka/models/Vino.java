@@ -23,7 +23,8 @@ public class Vino {
 
     String lokacijaSlike;
 
-    @OneToOne(mappedBy = "vino")
+    @ManyToOne
+    @JoinColumn(name = "id_korpa")
     private Korpa korpa;
 
     //String godinaBerbe;
@@ -92,6 +93,7 @@ public class Vino {
     public void setLokacijaSlike(String lokacijaSlike) {
         this.lokacijaSlike = lokacijaSlike;
     }
+
 }
 
 

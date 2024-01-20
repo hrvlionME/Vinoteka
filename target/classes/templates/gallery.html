@@ -22,7 +22,13 @@
         i {
             margin-right: 1rem;
         }
-        
+
+        img {
+            object-fit: cover;
+            width: 50px;
+            height: 350px;
+        }
+
         nav {
             background-color: #470202;
         }
@@ -70,7 +76,7 @@
         <div class="row">
             <div class="col-lg-4 mx-auto" th:each="vino : ${vina}">
                 <div class="card mx-2 mb-5" style="width: 18rem;">
-                    <img src="10zilavka_vrhunska.jpg" class="card-img-top" alt="...">
+                    <img th:src="${'uploads/' + vino.lokacijaSlike}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${'Naziv: ' + vino.naziv}">Naziv</h5>
                         <p class="card-text" th:text="${'Proizvodjac: ' + vino.proizvodjac}">Proizvodjac</p>

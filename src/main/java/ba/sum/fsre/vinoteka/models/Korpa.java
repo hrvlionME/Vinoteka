@@ -2,15 +2,16 @@ package ba.sum.fsre.vinoteka.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Korpa {
     @Id
     @GeneratedValue
     private long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "vino_id", referencedColumnName = "id")
-    private Vino vino;
+    @OneToMany(mappedBy = "korpa")
+    private List<Vino> vina;
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
@@ -24,19 +25,19 @@ public class Korpa {
         this.id = id;
     }
 
-    public Vino getVino() {
-        return vino;
-    }
-
-    public void setVino(Vino vino) {
-        this.vino = vino;
-    }
-
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Vino> getVina() {
+        return vina;
+    }
+
+    public void setVina(List<Vino> vina) {
+        this.vina = vina;
     }
 }
