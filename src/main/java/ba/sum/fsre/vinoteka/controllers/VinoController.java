@@ -1,9 +1,13 @@
 package ba.sum.fsre.vinoteka.controllers;
 
+import ba.sum.fsre.vinoteka.models.User;
 import ba.sum.fsre.vinoteka.models.Vino;
+import ba.sum.fsre.vinoteka.repositories.UserRepository;
 import ba.sum.fsre.vinoteka.repositories.VinoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,16 +30,27 @@ public class VinoController {
     @Autowired
     VinoRepository vinoRepo;
 
+    @Autowired
+    UserRepository userRepository;
+
+
     private static String UPLOADED_FOLDER = System.getProperty("user.dir") + "/src/main/resources/static/uploads/";
     @GetMapping("/store")
     public String gallery(Model model){
         List<Vino> vina = vinoRepo.findAll();
         model.addAttribute("vina", vina);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            User user = userRepository.findByEmail(username);
+            model.addAttribute("loggedInUser", user);
+        }
         return "gallery";
     }
 
     @GetMapping("/edit")
-    public String edit(Model model){
+    public String edit(Model model, Principal principal){
         List<Vino> vina = vinoRepo.findAll();
         model.addAttribute("vina", vina);
         return "edit";
@@ -56,7 +72,6 @@ public class VinoController {
     @PostMapping("/upload")
     public String addVino(@Valid Vino vino, @RequestParam("file") MultipartFile file, BindingResult result, Model model){
         boolean errors = result.hasErrors();
-        System.out.println("POSTED");
         if(errors){;
             model.addAttribute("vino", vino);
             return "/edit/add";
