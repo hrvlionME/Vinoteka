@@ -162,7 +162,7 @@
         //var proizvodjac = clickedButton.closest('.card').find('.card-text').text().trim().replace('Proizvodjac: ', '');
         //var sorta = clickedButton.closest('.card').find('.list-group-item:eq(0)').text().trim().replace('Sorta: ', '');
         //var podrucje = clickedButton.closest('.card').find('.list-group-item:eq(1)').text().trim().replace('Podrucje: ', '');
-        var redCircle = $('.red-circle[data-wine="' + naziv + '"]');
+        var redCircle = $('.red-circle[data-wineid="' + vinoId + '"]');
         redCircle.show();
         var listItem = $('<li>').text('Naziv: ' + naziv)
             .attr('data-wine', vinoId);
@@ -186,11 +186,12 @@
 
     $('.btn-dodaj-u-korpu').click(addToCart);
 
+    
     $('body').on('click', '.red-circle', function () {
-        var naziv = $(this).data('wine');
+        var vinoId = $(this).data('wineid');
         $(this).hide();
-        $('.btn-dodaj-u-korpu[data-wine="' + naziv + '"]').removeClass('disabled');
-        $('#exampleModalCenter ul li[data-wine="' + naziv + '"]').remove();
+        $('.btn-dodaj-u-korpu[data-wineid="' + vinoId + '"]').removeClass('disabled');
+        $('#exampleModalCenter ul li[data-wineid="' + vinoId + '"]').remove();
     });
 
     $('#exampleModalCenter').on('shown.bs.modal', function() {
