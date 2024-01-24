@@ -6,28 +6,28 @@ Projekt za kolegij "Programiranje u Javi"
 ## Docker-compose
 Za pokretanje Docker-skripte potrebno je upaliti Docker Desktop i u BASH-u unutar foldera ukucati:
 
-> docker compose build
+> docker compose build <br/>
 > docker compose up -d
 
 Unutar scripts foldera se nalazi schema koja ubacuje admina unutar aplikacije.
 
-> **Login za admina:**
-> Mail: admin@test.com
+> **Login za admina:** <br/>
+> Mail: admin@test.com <br/>
 > Lozinka: lozinka
 
 
 ## Rute
-**Dostupne svima**
-"/" - homepage
-"/auth/login/" - login
+**Dostupne svima** <br/>
+"/" - homepage <br/>
+"/auth/login/" - login <br/>
 "/auth/register/" - register
 
-**Dostupne isključivo gostima**
+**Dostupne isključivo gostima** <br/>
 "/showcase" - pregled vina za goste
 
-**Dostupne korisnicima**
+**Dostupne korisnicima** <br/>
 "/store" - pregled vina za korisnike
 
-**Dostupne administratoru**
-"/edit" - pregled vina za administratora
+**Dostupne administratoru** <br/>
+"/edit" - pregled vina za administratora <br/>
 "/edit/add" - forma za ubacivanje novih vina
