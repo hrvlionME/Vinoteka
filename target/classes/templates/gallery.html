@@ -109,7 +109,7 @@
     <div class="row">
         <div class="col-lg-4 mx-auto" th:each="vino : ${vina}">
             <div class="card mx-2 mb-5" style="width: 18rem;">
-                <div class="red-circle" th:data-wine="${vino.naziv}">×</div>
+                <div class="red-circle" th:data-wine="${vino.naziv}" th:data-wineid="${vino.id}">×</div>
                 <img th:src="${'uploads/' + vino.lokacijaSlike}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${'Naziv: ' + vino.naziv}">Naziv</h5>
@@ -120,7 +120,7 @@
                     <li class="list-group-item" th:text="${'Podrucje: ' + vino.podrucje}">Podrucje</li>
                 </ul>
                 <div class="card-body text-center">
-                    <a href="#" class="btn btn-primary btn-dodaj-u-korpu" th:data-wine="${vino.naziv}">Dodaj u korpu</a>
+                    <a href="#" class="btn btn-primary btn-dodaj-u-korpu" th:data-wine="${vino.naziv}" th:data-wineid="${vino.id}">Dodaj u korpu</a>
                 </div>
             </div>
         </div>
@@ -135,15 +135,17 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Pregled Korpe</h5>
             </div>
-            <form action="/korpa" method="post">
+            <form id="korpaForm" th:action="@{/korpa}" method="post">
             <div class="modal-body">
-                <ul>
+                <ul id="selectedVinoList">
                 </ul>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
-                <button type="button" class="btn btn-primary">Spremi korpu</button>
+                <button type="submit" class="btn btn-primary">Spremi korpu</button>
             </div>
+                <input type="hidden" id="vinoIdsInput" name="vinoIdsInput" />
+                <input type="hidden" id="userIdInput" name="userIdInput" th:value="${loggedInUser.id}" />
             </form>
         </div>
     </div>
@@ -152,23 +154,38 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <script>
+
     function addToCart(event) {
         var clickedButton = $(event.currentTarget);
         var naziv = clickedButton.data('wine');
-        var proizvodjac = clickedButton.closest('.card').find('.card-text').text().trim().replace('Proizvodjac: ', '');
-        var sorta = clickedButton.closest('.card').find('.list-group-item:eq(0)').text().trim().replace('Sorta: ', '');
-        var podrucje = clickedButton.closest('.card').find('.list-group-item:eq(1)').text().trim().replace('Podrucje: ', '');
+        var vinoId = clickedButton.data('wineid');
+        //var proizvodjac = clickedButton.closest('.card').find('.card-text').text().trim().replace('Proizvodjac: ', '');
+        //var sorta = clickedButton.closest('.card').find('.list-group-item:eq(0)').text().trim().replace('Sorta: ', '');
+        //var podrucje = clickedButton.closest('.card').find('.list-group-item:eq(1)').text().trim().replace('Podrucje: ', '');
         var redCircle = $('.red-circle[data-wine="' + naziv + '"]');
         redCircle.show();
         var listItem = $('<li>').text('Naziv: ' + naziv)
-            .attr('data-wine', naziv);
+            .attr('data-wine', vinoId);
+
+
         $('#exampleModalCenter ul').append(listItem);
+        $('#selectedVinoList').append(listItem);
+
         clickedButton.addClass('disabled');
+
+        var selectedVinoIds = $('#selectedVinoList li').map(function() {
+            return $(this).attr('data-wine');
+        }).get();
+        $('#vinoIdsInput').val(selectedVinoIds.join(','));
+    }
+
+
+    function saveKorpa() {
+        $('#korpaForm').submit();
     }
 
     $('.btn-dodaj-u-korpu').click(addToCart);
 
-    // Red-circle clicked
     $('body').on('click', '.red-circle', function () {
         var naziv = $(this).data('wine');
         $(this).hide();

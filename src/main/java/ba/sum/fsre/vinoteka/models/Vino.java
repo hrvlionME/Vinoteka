@@ -2,6 +2,8 @@ package ba.sum.fsre.vinoteka.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.util.List;
+
 @Entity
 public class Vino {
 
@@ -23,9 +25,9 @@ public class Vino {
 
     String lokacijaSlike;
 
-    @ManyToOne
-    @JoinColumn(name = "id_korpa")
-    private Korpa korpa;
+    @OneToMany(mappedBy = "vino")
+    @Transient
+    private List<Korpa> korpe;
 
     //String godinaBerbe;
     public Vino(){}
@@ -78,12 +80,12 @@ public class Vino {
         this.podrucje = podrucje;
     }
 
-    public Korpa getKorpa() {
-        return korpa;
+    public List<Korpa> getKorpe() {
+        return korpe;
     }
 
-    public void setKorpa(Korpa korpa) {
-        this.korpa = korpa;
+    public void setKorpe(List<Korpa> korpe) {
+        this.korpe = korpe;
     }
 
     public String getLokacijaSlike() {
