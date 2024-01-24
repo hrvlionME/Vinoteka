@@ -90,7 +90,9 @@
                         <li class="list-group-item" th:text="${'Podrucje: ' + vino.podrucje}">Podrucje</li>
                     </ul>
                     <div class="card-body text-center">
-                        <a href="#" class="btn btn-danger">Ukloni vino</a>
+//                        <form th:action="@{/users/delete/{userId}(userId=${user.id})}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Ukloni vino</button>
+                    </form>
                     </div>
                 </div>
             </div>
