@@ -2,6 +2,8 @@
 
 Projekt za kolegij "Programiranje u Javi"
 
+## Opis
+Dobrodošli na našu vinoteku. Ova aplikacija pruža jednostavan, ali sotisficiran pristup svijetu vrhunskih domaćih vina, nudeći korisnicima jedinstvenu priliku da istraže, kupuju i uživaju u najfinijim vinima.
 
 ## Docker-compose
 Za pokretanje Docker-skripte potrebno je upaliti Docker Desktop i u BASH-u unutar foldera ukucati:
@@ -31,3 +33,4 @@ Unutar scripts foldera se nalazi schema koja ubacuje admina unutar aplikacije.
 **Dostupne administratoru** <br/>
 "/edit" - pregled vina za administratora <br/>
 "/edit/add" - forma za ubacivanje novih vina
+

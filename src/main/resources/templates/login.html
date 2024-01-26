@@ -67,24 +67,6 @@
 
 
     </style>
-
-    <script>
-        function idinastr() {
-            window.location.href = '';
-        }
-
-        function provjera() {
-            var email = document.getElementById('email').value;
-            var lozinka = document.getElementById('lozinka').value;
-
-            if (email && lozinka) {
-                idinastr();
-            } else {
-                alert('Molimo vas da popunite sva obavezna polja.');
-            }
-        }
-    </script>
-
 </head>
 <body>
 <div class="okvir">
@@ -102,7 +84,6 @@
         <input type="password" id="password" name="password" required placeholder="Unesite lozinku">
     </div>
     <br/>
-    <!--<button type="submit" onclick="provjera()">Prijavi se</button>-->
     <button type="submit">Prijavi se</button>
     </form>
     <br/><br/>

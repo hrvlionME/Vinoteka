@@ -23,21 +23,24 @@ public class Vino {
     @NotBlank(message="Polje područje je obvezno!")
     String podrucje;
 
+    double cijena;
+
     String lokacijaSlike;
 
     @OneToMany(mappedBy = "vino")
     @Transient
     private List<Korpa> korpe;
 
-    //String godinaBerbe;
+
     public Vino(){}
 
-     public Vino(String naziv,String proizvodjac,String podrucje,String sorta, String lokacijaSlike){
+     public Vino(String naziv,String proizvodjac,String podrucje,String sorta, String lokacijaSlike, double cijena){
          this.naziv=naziv;
          this.podrucje=podrucje;
          this.proizvodjac=proizvodjac;
          this.sorta=sorta;
          this.lokacijaSlike = lokacijaSlike;
+         this.cijena = cijena;
      }
 
     public Long getId() {
@@ -94,6 +97,14 @@ public class Vino {
 
     public void setLokacijaSlike(String lokacijaSlike) {
         this.lokacijaSlike = lokacijaSlike;
+    }
+
+    public double getCijena() {
+        return cijena;
+    }
+
+    public void setCijena(double cijena) {
+        this.cijena = cijena;
     }
 
 }

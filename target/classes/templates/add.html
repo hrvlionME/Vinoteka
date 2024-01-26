@@ -75,6 +75,10 @@
     <input type="text" th:field="*{sorta}"  id="sorta"   required >
     <div th:if="${#fields.hasErrors('sorta')}" th:errors="*{sorta}"></div>
 
+    <label for="cijena">Cijena :</label>
+    <input type="number" name="cijena" id="cijena"   required >
+    <div th:if="${#fields.hasErrors('cijena')}" th:errors="*{cijena}"></div>
+
     <label for="slika">Učitaj sliku</label>
     <input type="file"  accept="image/*" style="cursor: pointer;"  name="file" id="slika">
 

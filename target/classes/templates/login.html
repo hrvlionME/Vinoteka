@@ -67,24 +67,6 @@
 
 
     </style>
-
-    <script>
-        function idinastr() {
-            window.location.href = '';
-        }
-
-        function provjera() {
-            var email = document.getElementById('email').value;
-            var lozinka = document.getElementById('lozinka').value;
-
-            if (email && lozinka) {
-                idinastr();
-            } else {
-                alert('Molimo vas da popunite sva obavezna polja.');
-            }
-        }
-    </script>
-
 </head>
 <body>
 <div class="okvir">
@@ -92,34 +74,16 @@
     <h1>Prijava</h1>
     <label for="email">Email adresa:</label>
     <div class="email-input-container">
-<<<<<<< HEAD
-<<<<<<< HEAD
         <img class="email-icon" th:src="@{/images/icon.png}" alt="Email icon">
-=======
-        <img class="email-icon" src="../static/icon.png" alt="Email icon">
->>>>>>> c6a52ca (minor changes)
-=======
-
-        <img class="email-icon" th:src="@{/images/icon.png}" alt="Email icon">
->>>>>>> dc7c5b8 (homepage)
         <input type="email" id="email" name="email" required placeholder="Unesite svoj email">
     </div>
     <br/>
     <label for="password">Lozinka:</label>
     <div class="password-input-container">
-<<<<<<< HEAD
-<<<<<<< HEAD
         <img class="input-icon" th:src="@{/images/ikona.jpg}" alt="Password icon">
-=======
-        <img class="input-icon" src="../static/ikona.jpg" alt="Password icon">
->>>>>>> c6a52ca (minor changes)
-=======
-        <img class="input-icon" th:src="@{/images/ikona.jpg}" alt="Password icon">
->>>>>>> dc7c5b8 (homepage)
         <input type="password" id="password" name="password" required placeholder="Unesite lozinku">
     </div>
     <br/>
-    <!--<button type="submit" onclick="provjera()">Prijavi se</button>-->
     <button type="submit">Prijavi se</button>
     </form>
     <br/><br/>
