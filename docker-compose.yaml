@@ -1,12 +1,36 @@
 version : '3'
 services:
+  vinoteka:
+    build: .
+    container_name: vinoteka
+    image: vinoteka:latest
+    environment:
+      - MYSQL_HOST=mysql
+    ports:
+      - 80:8080
+    networks:
+      - rest-network
+    volumes:
+      - java-data:/app/uploads
+    depends_on:
+      - mysql
+    restart: always
   mysql:
     image: mysql
-    command: --default-authentication-plugin=mysql_native_password
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --default-authentication-plugin=mysql_native_password
+    networks:
+      - rest-network
     environment:
+      MYSQL_USER: user
       MYSQL_ROOT_PASSWORD: lozinka
       MYSQL_DATABASE: BAZA
-    ports:
-      - "3306:3306"
+      MYSQL_password: lozinka
     volumes:
+      - mysql-data:/var/lib/mysql
       - './scripts/schema.sql:/docker-entrypoint-initdb.d/1.sql'
+networks:
+  rest-network:
+    driver: bridge
+volumes:
+  mysql-data:
+  java-data:

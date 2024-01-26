@@ -118,6 +118,7 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item" th:text="${'Sorta: ' + vino.sorta}">Sorta</li>
                     <li class="list-group-item" th:text="${'Podrucje: ' + vino.podrucje}">Podrucje</li>
+                    <li class="list-group-item" th:text="${'Cijena: ' + vino.cijena + ' KM'}">Cijena</li>
                 </ul>
                 <div class="card-body text-center">
                     <a href="#" class="btn btn-primary btn-dodaj-u-korpu" th:data-wine="${vino.naziv}" th:data-wineid="${vino.id}">Dodaj u korpu</a>
@@ -159,12 +160,10 @@
         var clickedButton = $(event.currentTarget);
         var naziv = clickedButton.data('wine');
         var vinoId = clickedButton.data('wineid');
-        //var proizvodjac = clickedButton.closest('.card').find('.card-text').text().trim().replace('Proizvodjac: ', '');
-        //var sorta = clickedButton.closest('.card').find('.list-group-item:eq(0)').text().trim().replace('Sorta: ', '');
-        //var podrucje = clickedButton.closest('.card').find('.list-group-item:eq(1)').text().trim().replace('Podrucje: ', '');
+        var cijena = clickedButton.closest('.card').find('.list-group-item:eq(2)').text().trim().replace('Cijena: ', '');
         var redCircle = $('.red-circle[data-wineid="' + vinoId + '"]');
         redCircle.show();
-        var listItem = $('<li>').text('Naziv: ' + naziv)
+        var listItem = $('<li>').text('Naziv: ' + naziv + ', cijena: ' + cijena)
             .attr('data-wine', vinoId);
 
 

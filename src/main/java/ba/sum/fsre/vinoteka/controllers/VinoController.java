@@ -2,17 +2,16 @@ package ba.sum.fsre.vinoteka.controllers;
 
 import ba.sum.fsre.vinoteka.models.User;
 import ba.sum.fsre.vinoteka.models.Vino;
+import ba.sum.fsre.vinoteka.repositories.KorpaRepository;
 import ba.sum.fsre.vinoteka.repositories.UserRepository;
 import ba.sum.fsre.vinoteka.repositories.VinoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-=======
 import org.springframework.security.access.prepost.PreAuthorize;
->>>>>>> dc7c5b8 (homepage)
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,8 +37,10 @@ public class VinoController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    KorpaRepository korpaRepository;
 
-    private static String UPLOADED_FOLDER = System.getProperty("user.dir") + "/src/main/resources/static/uploads/";
+    private static String UPLOADED_FOLDER = "/app/uploads/";
     @GetMapping("/store")
     public String gallery(Model model){
         List<Vino> vina = vinoRepo.findAll();
@@ -72,18 +73,29 @@ public class VinoController {
         model.addAttribute("vina", vina);
         return "showcase";
     }
+    @Transactional
+    @PostMapping("/edit/delete/{vinoId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String deleteVino(@PathVariable Long vinoId) {
+        Vino vino = vinoRepo.findById(vinoId).orElse(null);
+        korpaRepository.deleteByVinoId(vinoId);
+        try {
+            Path filePath = Paths.get(UPLOADED_FOLDER + vino.getLokacijaSlike());
+            Files.deleteIfExists(filePath);
 
- /*   @PostMapping("/edit/delete/{}")
-     @PreAuthorize("hasAuthority('ADMIN')")
-    public String deleteVino(@PathVariable Long ) {
-        vinoRepo.deleteById();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        vinoRepo.deleteById(vinoId);
         return "redirect:/edit";
     }
- */
+
 
 
     @PostMapping("/upload")
-    public String addVino(@Valid Vino vino, @RequestParam("file") MultipartFile file, BindingResult result, Model model){
+    public String addVino(@Valid Vino vino, @RequestParam("file") MultipartFile file, BindingResult result, Model model,
+                          @RequestParam("cijena") String cijenaInput){
         boolean errors = result.hasErrors();
         if(errors){;
             model.addAttribute("vino", vino);
@@ -91,6 +103,9 @@ public class VinoController {
         } else {
             if (file != null && !file.isEmpty()) {
                 try {
+                    double cijena = Double.parseDouble(cijenaInput);
+                    vino.setCijena(cijena);
+
                     String originalFilename = file.getOriginalFilename();
                     String uniqueFileName = UUID.randomUUID().toString() + "_" + originalFilename;
                     byte[] bytes = file.getBytes();

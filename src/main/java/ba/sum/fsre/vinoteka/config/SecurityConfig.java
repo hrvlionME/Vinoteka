@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .requestMatchers("/edit/**").hasAuthority("ADMIN")
                 .requestMatchers("/store/**").hasAuthority("USER")
                 .requestMatchers("/showcase/**").anonymous()
-                .requestMatchers("/upload/**").permitAll() // Allow unauthenticated access to the file upload endpoint
+                .requestMatchers("/upload/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
